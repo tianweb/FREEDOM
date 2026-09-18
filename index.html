@@ -972,5 +972,39 @@ renderExpenses();
 updateDashboard();
 showTab('dashboard');
 </script>
+<!-- FIREBASE START -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyDsGJ7CeYuW01dG1F9rLht-V0xxSS8cF2s",
+    authDomain: "freedom-app-a15fa.firebaseapp.com",
+    databaseURL: "https://freedom-app-a15fa-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "freedom-app-a15fa",
+    storageBucket: "freedom-app-a15fa.firebasestorage.app",
+    messagingSenderId: "320117478552",
+    appId: "1:320117478552:web:badc1c94aa7c32a2e3aced"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // FUNGSI SIMPAN DATA
+  window.simpanData = function(nama, jumlah) {
+    push(ref(db, 'keuangan/'), {s
+      nama: nama,
+      jumlah: parseInt(jumlah),
+      tanggal: new Date().toLocaleDateString('id-ID')
+    }).then(() => {
+      alert('✅ Data tersimpan!');
+    });
+  };
+
+  // BACA DATA OTOMATIS
+  onValue(ref(db, 'keuangan/'), (snapshot) => {
+    console.log('Data:', snapshot.val());
+  });
+</script>
+<!-- FIREBASE END -->
 </body></html>
